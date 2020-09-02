@@ -1,7 +1,7 @@
 {
-	"name": "@brentonhouse/template-package",
-	"version": "1.0.6",
-	"description": "Base template for creating a new npm package",
+	"name": "@geek/logger",
+	"version": "0.0.2",
+	"description": "Logging module for Node.js and Axway Titanium",
 	"main": "index.js",
 	"scripts": {
 		"list": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz",
@@ -23,13 +23,13 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "github:brentonhouse/template-package"
+		"url": "github:brentonhouse/geek-logger"
 	},
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/brentonhouse/template-package/issues"
+		"url": "https://github.com/brentonhouse/geek-logger/issues"
 	},
-	"homepage": "https://github.com/brentonhouse/template-package#readme",
+	"homepage": "https://github.com/brentonhouse/geek-logger#readme",
 	"keywords": [
 		"titanium",
 		"mobile",
@@ -37,11 +37,12 @@
 		"turbo",
 		"axway",
 		"appcelerator",
+		"geek",
 		"ios",
 		"android",
 		"iphone",
 		"ipad",
-		"template",
+		"logging",
 		"brenton-house"
 	],
 	"titanium": {},
