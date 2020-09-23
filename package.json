@@ -1,8 +1,8 @@
 {
 	"name": "@geek/logger",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"description": "Logging module for Node.js and Axway Titanium",
-	"main": "index.js",
+	"main": "Logger.js",
 	"scripts": {
 		"list": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz",
 		"prep": "npm install --ignore-scripts && npm run list",
