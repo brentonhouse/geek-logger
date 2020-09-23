@@ -1,13 +1,18 @@
 'use strict';
+
 const levels = require('./config/levels');
 const extras = require('./config/extras');
 const formats = require('./config/formats');
+
 const all_level_names = Object.keys(levels);
 const all_extra_names = Object.keys(extras);
+
 const ConsoleStore = require('./stores/Console');
 const NoopStore = require('./stores/Noop');
+
 const picomatch = require('picomatch');
 const _ = require('lodash');
+
 let default_logger;
 
 class Logger {
@@ -332,7 +337,7 @@ const applyFilters = () => {
 Logger.isConfigured = false;
 
 Logger.levels = levels;
-logger.extras = extras;
-logger.formats = formats;
+Logger.extras = extras;
+Logger.formats = formats;
 
 module.exports = Logger;
