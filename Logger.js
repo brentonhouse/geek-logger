@@ -8,9 +8,7 @@ const all_level_names = Object.keys(levels);
 const all_extra_names = Object.keys(extras);
 
 const ConsoleStore = require('./stores/Console');
-const NoopStore = require('./stores/Noop');
 
-const picomatch = require('picomatch');
 const micromatch = require('./micromatch');
 const _ = require('lodash');
 

@@ -1,7 +1,8 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable no-eq-null */
 const ansiColors = require('ansi-colors');
-const { ip_address } = require('@titanium/essentials/info');
+
+// eslint-disable-next-line no-unused-vars
 const { black, red, green, yellow, blue, magenta, cyan, white, gray, bold } = ansiColors;
 // const colorJson = require('color-json');
 
