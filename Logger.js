@@ -11,6 +11,7 @@ const ConsoleStore = require('./stores/Console');
 const NoopStore = require('./stores/Noop');
 
 const picomatch = require('picomatch');
+const micromatch = require('./micromatch');
 const _ = require('lodash');
 
 let default_logger;
@@ -322,14 +323,16 @@ const getLogLevelParams = (level, message, params = {}) => {
 const applyFilters = () => {
 
 	// console.trace(`📌  you are here → Logger.applyFilters()`);
-	for (const filter of namespace_filters) {
+	// console.debug(`🦠  Logger.namespaces: ${JSON.stringify(Logger.namespaces, null, 2)}`);
+	// console.debug(`🦠  namespace_filters: ${JSON.stringify(namespace_filters, null, 2)}`);
 
-		const isMatch = picomatch(filter);
+	// const matches = micromatch(Logger.namespaces, namespace_filters);
+	// console.debug(`🦠  matches: ${JSON.stringify(matches, null, 2)}`);
 
-		for (const namespace of Logger.namespaces) {
-			all_namespaces.set(namespace, isMatch(namespace));
-		}
-
+	for (const namespace of Logger.namespaces) {
+		// console.debug(`🦠  namespace: ${JSON.stringify(namespace, null, 2)}`);
+		// console.debug(`🦠  micromatch.all(namespace, namespace_filters): ${JSON.stringify(micromatch.all(namespace, namespace_filters), null, 2)}`);
+		all_namespaces.set(namespace, micromatch.all(namespace, namespace_filters));
 	}
 };
 
