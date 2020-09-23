@@ -1,1 +1,1 @@
-// TODO: add primary class
+module.exports = require('./Logger');
