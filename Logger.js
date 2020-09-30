@@ -279,21 +279,38 @@ Logger.filter = (filters = []) => {
 };
 
 const getLogParams = (message = '', params = {}) => {
+
 	if (typeof message === 'object') {
-		return message;
+		// return message;
+		params = checkForError(message);
 	} else if (typeof message === 'string') {
 		if (typeof params !== 'object') {
 			console.warn('log params is not an object.');
 			params = {};
+		} else {
+			params = checkForError(params);
 		}
 		params.message = message;
-		return params;
+		// return params;
+	} else {
+		console.warn('invalid parameters sent to Logger');
+		return { message: '' };
 	}
 
-	console.warn('invalid parameters sent to Logger');
-	return { message: '' };
 
 };
+
+const checkForError = params => {
+	if (params instanceof Error) {
+		const result = {};
+		result.stack = params.stack;
+		result.error_message = params.message;
+		return result;
+	} else {
+		return params;
+	}
+};
+
 
 const getLogLevelParams = (level, message, params = {}) => {
 
