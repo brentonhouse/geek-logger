@@ -98,8 +98,7 @@ class Logger {
 				}
 
 				this[level_name] = async (message, params = {}) => {
-
-					params = getLogParams(message, params, level_name);
+					params = getLogLevelParams(level_name, message, params);
 					const current_namespace = params.namespace || this.namespace;
 					if (all_namespaces.get(current_namespace)) {
 						return Promise.all(executions[level_name].map(job => job(mergeParams(params))));
@@ -118,8 +117,9 @@ class Logger {
 		for (const level_name of all_extra_names) {
 
 			if (parent) {
-				this[level_name] = async params => {
-					params = getLogParams(params);
+				this[level_name] = async (message, params = {})  => {
+					// params = getLogParams(params);
+					params = getLogLevelParams(level_name, message, params);
 					const current_namespace = params.namespace || this.namespace;
 					if (all_namespaces.get(current_namespace)) {
 						return parent[level_name](mergeParams(params));
@@ -142,7 +142,9 @@ class Logger {
 
 			this[level_name] = async (message, params = {}) => {
 
-				params = getLogParams(message, params, level_name);
+				// params = getLogParams(message, params, level_name);
+				params = getLogLevelParams(level_name, message, params);
+
 				const current_namespace = params.namespace || this.namespace;
 				if (all_namespaces.get(current_namespace)) {
 					return Promise.all(executions[level_name].map(job => job(mergeParams(params))));
@@ -157,7 +159,7 @@ class Logger {
 		if (parent) {
 
 			this.log = async (level, message, params = {}) => {
-				params = getLogLevelParams(params);
+				params = getLogLevelParams(level, message, params);
 				const current_namespace = params.namespace || this.namespace;
 				if (all_namespaces.get(current_namespace)) {
 					return parent.log(mergeParams(params));
@@ -169,7 +171,7 @@ class Logger {
 		} else {
 
 			this.log = async (level, message, params = {}) => {
-				params = getLogLevelParams(params);
+				params = getLogLevelParams(level, message, params);
 
 				const current_namespace = params.namespace || this.namespace;
 				if (all_namespaces.get(current_namespace)) {
@@ -278,11 +280,12 @@ Logger.filter = (filters = []) => {
 	applyFilters();
 };
 
-const getLogParams = (message = '', params = {}) => {
+const getLogParams = (message, params = {}) => {
 
 	if (typeof message === 'object') {
 		// return message;
 		params = checkForError(message);
+		params.message = params.error_message;
 	} else if (typeof message === 'string') {
 		if (typeof params !== 'object') {
 			console.warn('log params is not an object.');
@@ -297,14 +300,18 @@ const getLogParams = (message = '', params = {}) => {
 		return { message: '' };
 	}
 
+	return params;
 
 };
 
 const checkForError = params => {
 	if (params instanceof Error) {
-		const result = {};
-		result.stack = params.stack;
+		// const result = JSON.parse(JSON.stringify(params));
+		const result = { ...params };
+		console.warn(result instanceof Error);
+		result.stack_array = _.split(params.stack, '\n').filter(o => o);
 		result.error_message = params.message;
+		result.message = undefined;
 		return result;
 	} else {
 		return params;
@@ -322,13 +329,13 @@ const getLogLevelParams = (level, message, params = {}) => {
 	if (typeof message === 'string') {
 		params.message = message;
 	} else if (typeof message === 'object') {
-		params = message;
+		params = checkForError(message);
 	}
 
 	if (typeof level === 'string') {
 		params.level = level;
 	} else if (typeof level === 'object') {
-		params = level;
+		params = checkForError(level);
 	}
 
 	return params;
