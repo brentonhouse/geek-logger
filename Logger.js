@@ -305,13 +305,18 @@ const getLogParams = (message, params = {}) => {
 };
 
 const checkForError = params => {
+	// console.error(params instanceof Error);
 	if (params instanceof Error) {
 		// const result = JSON.parse(JSON.stringify(params));
+		// console.debug(`🦠  params=error: ${JSON.stringify(params, null, 2)}`);
 		const result = { ...params };
-		console.warn(result instanceof Error);
+		// console.warn(result instanceof Error);
 		result.stack_array = _.split(params.stack, '\n').filter(o => o);
 		result.error_message = params.message;
+		result.line = params.line;
+		result.column = params.column;
 		result.message = undefined;
+		// console.debug(result);
 		return result;
 	} else {
 		return params;
@@ -324,6 +329,8 @@ const getLogLevelParams = (level, message, params = {}) => {
 	if (typeof params !== 'object') {
 		console.warn('log params is not an object.');
 		params = {};
+	} else {
+		params = checkForError(params);
 	}
 
 	if (typeof message === 'string') {

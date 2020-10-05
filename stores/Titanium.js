@@ -4,13 +4,15 @@ class TitaniumStore {
 
 	constructor() {
 
-		this.event = ({ message, level, ...args }) => {
+		this.event = (params = {}) => {
 
-			const result = Ti.Analytics.featureEvent(message, args);
+			params = { ...params };
+			delete params.stack_array;
+			const result = Ti.Analytics.featureEvent(params.message, params);
 			if (result === -1) {
-				console.warn(`🗓️  Ti.Analytics.featureEvent - Validation Error: ${message}`, args);
+				console.warn(`🗓️  Ti.Analytics.featureEvent - Validation Error: ${params.message}`, params);
 			} else if (result === -2) {
-				console.warn(`🗓️  Ti.Analytics.featureEvent - Validation Disabled: ${message}`, args);
+				console.warn(`🗓️  Ti.Analytics.featureEvent - Validation Disabled: ${params.message}`, params);
 			}
 		};
 	}
