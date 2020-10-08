@@ -164,6 +164,7 @@ exports.events_color_simple = (args = {}) => {
 	const { message = '' } = clone;
 	let extra;
 
+	//TODO:  Need to move some of these to a new home...
 	switch (message) {
 		case 'screen_view':
 			extra = args.screen_name;
@@ -193,7 +194,7 @@ exports.events_color_simple = (args = {}) => {
 
 	}
 
-	if (extra) {
+	if (![ undefined, null ].includes(extra)) {
 		clone.message = `${red.bold('Event Generated:')} ${cyan(message)} -- ${green(extra)}`;
 	} else {
 		clone.message = `${red.bold('Event Generated:')} ${cyan(message)}`;
