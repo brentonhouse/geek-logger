@@ -1,6 +1,6 @@
 {
 	"name": "@geek/logger",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"description": "Logging module for Node.js and Axway Titanium",
 	"main": "Logger.js",
 	"scripts": {

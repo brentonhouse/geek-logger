@@ -162,40 +162,39 @@ exports.events_color = (args = {}) => {
 exports.events_color_simple = (args = {}) => {
 	const clone = { ...args };
 	const { message = '' } = clone;
-	let extra;
+	// let extra;
 
-	//TODO:  Need to move some of these to a new home...
-	switch (message) {
-		case 'screen_view':
-			extra = args.screen_name;
-			break;
+	// switch (message) {
+	// 	case 'screen_view':
+	// 		extra = args.screen_name;
+	// 		break;
 
-		case 'app_first_launch_update':
-			extra = args.app_previous_version;
-			break;
+	// 	case 'app_first_launch_update':
+	// 		extra = args.app_previous_version;
+	// 		break;
 
-		case 'toggle_beta':
-			extra = args.allow_beta_updates;
-			break;
+	// 	case 'toggle_beta':
+	// 		extra = args.allow_beta_updates;
+	// 		break;
 
-		case 'toggle_anonymous':
-			extra = args.anonymize_name;
-			break;
+	// 	case 'toggle_anonymous':
+	// 		extra = args.anonymize_name;
+	// 		break;
 
-		case 'article_open':
-			extra = args.article_id;
-			break;
+	// 	case 'article_open':
+	// 		extra = args.article_id;
+	// 		break;
 
-		case 'office_select':
-			extra = args.new_office_id;
-			break;
+	// 	case 'office_select':
+	// 		extra = args.new_office_id;
+	// 		break;
 
-		default:
+	// 	default:
 
-	}
+	// }
 
-	if (![ undefined, null ].includes(extra)) {
-		clone.message = `${red.bold('Event Generated:')} ${cyan(message)} -- ${green(extra)}`;
+	if (![ undefined, null ].includes(args.event_value)) {
+		clone.message = `${red.bold('Event Generated:')} ${cyan(message)} -- ${green(args.event_value)}`;
 	} else {
 		clone.message = `${red.bold('Event Generated:')} ${cyan(message)}`;
 	}
