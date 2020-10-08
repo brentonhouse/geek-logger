@@ -312,10 +312,13 @@ const checkForError = params => {
 		const result = { ...params };
 		// console.warn(result instanceof Error);
 		result.stack_array = _.split(params.stack, '\n').filter(o => o);
+		delete result.stack;
 		result.error_message = params.message;
 		result.line = params.line;
 		result.column = params.column;
-		result.message = undefined;
+		_.defaults(result, params.meta);
+		delete result.meta;
+		delete result.message;
 		// console.debug(result);
 		return result;
 	} else {

@@ -159,3 +159,12 @@ exports.events_color = (args = {}) => {
 
 };
 
+exports.events_color_simple = (args = {}) => {
+	const clone = { ...args };
+	const { message = '' } = clone;
+
+	clone.message = `${red.bold('Event Generated:')} ${cyan(message)} -- ${green(args.screen_name)}`;
+	return exports.timestamp_message_color(clone);
+
+};
+
