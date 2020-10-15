@@ -6,9 +6,9 @@
 	"scripts": {
 		"list": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz",
 		"prep": "npm install --ignore-scripts && npm run list",
-		"prepublishOnly": "git pull && bump",
+		"prepublishOnly": "git pull && bump release",
 		"lint": "eslint --fix .",
-		"test": "echo \"no test specified\" && exit 0"
+		"test": "npm run prep"
 	},
 	"author": {
 		"name": "Brenton House",
@@ -57,7 +57,8 @@
 		"lodash": "^4.17.20"
 	},
 	"peerDependencies": {
-		"ansi-colors": "^4.1.1"
+		"ansi-colors": "^4.1.1",
+		"@geek/jsonc": "^0.0.13"
 	},
 	"dependencies": {},
 	"private": false
