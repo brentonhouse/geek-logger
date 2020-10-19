@@ -1,16 +1,16 @@
 'use strict';
 
-const levels = require('./config/levels');
-const extras = require('./config/extras');
-const formats = require('./config/formats');
+const levels = require(`./config/levels`);
+const extras = require(`./config/extras`);
+const formats = require(`./config/formats`);
 
 const all_level_names = Object.keys(levels);
 const all_extra_names = Object.keys(extras);
 
-const ConsoleStore = require('./stores/Console');
+const ConsoleStore = require(`./stores/Console`);
 
-const micromatch = require('./micromatch');
-const _ = require('lodash');
+const micromatch = require(`./micromatch`);
+const _ = require(`lodash`);
 
 let default_logger;
 
@@ -21,7 +21,7 @@ class Logger {
 		level:max_level = levels.warn,
 		stores = [ new ConsoleStore() ],
 		meta,
-		namespace = 'default',
+		namespace = `default`,
 	} = {}) {
 
 
@@ -60,13 +60,13 @@ class Logger {
 
 		};
 
-		if (typeof max_level === 'string') {
+		if (typeof max_level === `string`) {
 			max_level = levels[max_level] || levels.warn;
 		}
 
-		if (typeof meta === 'object') {
+		if (typeof meta === `object`) {
 			metadata_base = meta;
-		} else if (typeof meta === 'function') {
+		} else if (typeof meta === `function`) {
 			metadata_func = meta;
 		}
 
@@ -92,7 +92,7 @@ class Logger {
 				executions[level_name] = [];
 
 				for (const store of stores) {
-					if (typeof store[level_name] === 'function') {
+					if (typeof store[level_name] === `function`) {
 						executions[level_name].push(store[level_name]);
 					}
 				}
@@ -135,7 +135,7 @@ class Logger {
 			executions[level_name] = [];
 
 			for (const store of stores) {
-				if (typeof store[level_name] === 'function') {
+				if (typeof store[level_name] === `function`) {
 					executions[level_name].push(store[level_name]);
 				}
 			}
@@ -188,7 +188,7 @@ class Logger {
 			Object.assign(metadata_extra, params);
 		};
 
-		Object.defineProperty(this, 'metadata', {
+		Object.defineProperty(this, `metadata`, {
 			enumerable: true,
 			get () { return mergeParams(); },
 		 });
@@ -198,7 +198,7 @@ class Logger {
 }
 
 
-Object.defineProperty(Logger, 'defaultLogger', {
+Object.defineProperty(Logger, `defaultLogger`, {
 	enumerable: true,
 	get () {
 		// console.debug(`🦠  default_logger: ${JSON.stringify(default_logger, null, 2)}`);
@@ -209,12 +209,12 @@ Object.defineProperty(Logger, 'defaultLogger', {
 			default_logger = logger;
 			Logger.isConfigured = true;
 		} else {
-			console.error('defaultLogger is not an instance of Logger');
+			console.error(`defaultLogger is not an instance of Logger`);
 		}
 	 },
 });
 
-Object.defineProperty(Logger, 'metadata', {
+Object.defineProperty(Logger, `metadata`, {
 	enumerable: true,
 	get () {
 		if (Logger.defaultLogger) {
@@ -227,7 +227,7 @@ Object.defineProperty(Logger, 'metadata', {
 	},
 });
 
-Object.defineProperty(Logger, 'namespaces', {
+Object.defineProperty(Logger, `namespaces`, {
 	enumerable: true,
 	get () {
 		return [ ...all_namespaces.keys() ];
@@ -250,12 +250,12 @@ for (const level_name of all_level_names.concat(all_extra_names)) {
 
 Logger.stores = {
 	// TIBUG: Relative path requires broken on iOS.  TIMOB-28037
-	Console:  require('./stores/Console'),
+	Console:  require(`./stores/Console`),
 	// TIBUG: Relative path requires broken on iOS.  TIMOB-28037
-	Titanium: require('./stores/Titanium'),
+	Titanium: require(`./stores/Titanium`),
 };
 
-Logger.createLogger = (namespace = 'default', params = {}) => {
+Logger.createLogger = (namespace = `default`, params = {}) => {
 	params.parent = params.parent || Logger.defaultLogger;
 	params.namespace = namespace;
 	return new Logger(params);
@@ -282,13 +282,13 @@ Logger.filter = (filters = []) => {
 
 const getLogParams = (message, params = {}) => {
 
-	if (typeof message === 'object') {
+	if (typeof message === `object`) {
 		// return message;
 		params = checkForError(message);
-		params.message = params.error_message;
-	} else if (typeof message === 'string') {
-		if (typeof params !== 'object') {
-			console.warn('log params is not an object.');
+		// params.message = params.error_message;
+	} else if (typeof message === `string`) {
+		if (typeof params !== `object`) {
+			console.warn(`log params is not an object.`);
 			params = {};
 		} else {
 			params = checkForError(params);
@@ -296,8 +296,8 @@ const getLogParams = (message, params = {}) => {
 		params.message = message;
 		// return params;
 	} else {
-		console.warn('invalid parameters sent to Logger');
-		return { message: '' };
+		console.warn(`invalid parameters sent to Logger`);
+		return { message: `` };
 	}
 
 	return params;
@@ -311,7 +311,7 @@ const checkForError = params => {
 		// console.debug(`🦠  params=error: ${JSON.stringify(params, null, 2)}`);
 		const result = { ...params };
 		// console.warn(result instanceof Error);
-		result.stack_array = _.split(params.stack, '\n').filter(o => o);
+		result.stack_array = _.split(params.stack, `\n`).filter(o => o);
 		delete result.stack;
 		result.error_message = params.message;
 		result.line = params.line;
@@ -329,22 +329,22 @@ const checkForError = params => {
 
 const getLogLevelParams = (level, message, params = {}) => {
 
-	if (typeof params !== 'object') {
-		console.warn('log params is not an object.');
+	if (typeof params !== `object`) {
+		console.warn(`log params is not an object.`);
 		params = {};
 	} else {
 		params = checkForError(params);
 	}
 
-	if (typeof message === 'string') {
+	if (typeof message === `string`) {
 		params.message = message;
-	} else if (typeof message === 'object') {
+	} else if (typeof message === `object`) {
 		params = checkForError(message);
 	}
 
-	if (typeof level === 'string') {
+	if (typeof level === `string`) {
 		params.level = level;
-	} else if (typeof level === 'object') {
+	} else if (typeof level === `object`) {
 		params = checkForError(level);
 	}
 

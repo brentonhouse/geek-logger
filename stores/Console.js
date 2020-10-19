@@ -1,7 +1,7 @@
 
-const levels = require('../config/levels');
-const extras = require('../config/extras');
-const formats = require('../config/formats');
+const levels = require(`../config/levels`);
+const extras = require(`../config/extras`);
+const formats = require(`../config/formats`);
 
 const all_level_names = Object.keys(levels);
 const all_extra_names = Object.keys(extras);
@@ -10,7 +10,7 @@ class Console {
 
 	constructor({ levels = all_level_names, extras = [], default_format = formats.timestamp_message_args, level_formats = {} } = {}) {
 
-		if (typeof default_format === 'string') {
+		if (typeof default_format === `string`) {
 			default_format = formats[default_format];
 		}
 		// console.debug(default_format);
@@ -53,16 +53,16 @@ class Console {
 
 module.exports = Console;
 
-function getConsoleLevel(level = 'debug') {
+function getConsoleLevel(level = `debug`) {
 
-	let console_level = 'debug';
+	let console_level = `debug`;
 
 	if (levels[level] <= levels.error) {
-		console_level = 'error';
+		console_level = `error`;
 	} else if (levels[level] === levels.warn) {
-		console_level = 'warn';
+		console_level = `warn`;
 	} else if (levels[level] <= levels.info) {
-		console_level = 'info';
+		console_level = `info`;
 	}
 
 	return console_level;
@@ -85,18 +85,18 @@ function stringArrayToSet({ levels, default_format, level_formats }) {
 		return {};
 	}
 
-	const  errMsg = 'Cannot make set from type other than Array of string elements';
+	const  errMsg = `Cannot make set from type other than Array of string elements`;
 
 	if (!Array.isArray(levels)) {
 	  throw new Error(errMsg);
 	}
 
 	return levels.reduce((set, level_name) =>  {
-	  if (typeof level_name !== 'string') {
+	  if (typeof level_name !== `string`) {
 		 throw new Error(errMsg);
 	  }
 
-		set[level_name] = typeof level_formats[level_name] === 'function' ? level_formats[level_name] : (formats[level_formats[level_name]] || default_format);
+		set[level_name] = typeof level_formats[level_name] === `function` ? level_formats[level_name] : (formats[level_formats[level_name]] || default_format);
 
 	  return set;
 	}, {});

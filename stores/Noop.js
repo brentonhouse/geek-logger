@@ -1,6 +1,6 @@
 
-const levels = require('../config/levels');
-const extras = require('../config/extras');
+const levels = require(`../config/levels`);
+const extras = require(`../config/extras`);
 
 const all_level_names = Object.keys(levels);
 const all_extra_names = Object.keys(extras);
