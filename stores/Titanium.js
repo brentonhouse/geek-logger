@@ -20,6 +20,7 @@ class TitaniumStore {
 
 			params = { ...params };
 			Alloy.Globals.aca.leaveBreadcrumb(params.message, params);
+		};
 
 	}
 
