@@ -15,6 +15,12 @@ class TitaniumStore {
 				console.warn(`🗓️  Ti.Analytics.featureEvent - Validation Disabled: ${params.message}`, params);
 			}
 		};
+
+		this.trace = (params = {}) => {
+
+			params = { ...params };
+			Alloy.Globals.aca.leaveBreadcrumb(params.message, params);
+
 	}
 
 }
