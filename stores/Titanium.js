@@ -19,11 +19,37 @@ class TitaniumStore {
 		this.trace = (params = {}) => {
 
 			params = { ...params };
-			Alloy.Globals.aca.leaveBreadcrumb(params.message, params);
+			aca.leaveBreadcrumb(params.message, params);
 		};
 
 	}
 
 }
+
+// #region ---[ Configure ACA Adapter ]---
+
+// ---------------------------------------------------------
+//    Configure ACA Adapter
+// ---------------------------------------------------------
+let aca;
+
+try {
+	aca = require(`com.appcelerator.aca`);
+	 } catch (error) {
+
+	logger.error(`Error loading module com.appcelerator.aca`, error);
+	aca = {
+		logHandledException: error => { console.debug(`aca.logHandledException(${error})`); },
+		leaveBreadcrumb:     (breadcrumb, data) => { console.debug(`aca.leaveBreadcrumb(${breadcrumb})`); },
+		setUsername:         username => { console.debug(`aca.setUsername(${username})`); },
+		setMetadata:         (key, value) => { console.debug(`aca.setMetadata(${key}:${value})`); },
+		setOptOutStatus:     optOutStatus => { console.debug(`aca.setOptOutStatus(${optOutStatus})`); },
+		getOptOutStatus:     () => { return false; },
+		setBreadcrumbLimit:  (breadcrumbLimit = 100) => { console.debug(`aca.setBreadcrumbLimit(${breadcrumbLimit})`); },
+	};
+	 }
+
+
+// #endregion ---[ Configure ACA Adapter ]---
 
 module.exports = TitaniumStore;
