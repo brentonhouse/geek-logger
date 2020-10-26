@@ -37,7 +37,8 @@ try {
 	aca = require(`com.appcelerator.aca`);
 } catch (error) {
 
-	console.error(`Error loading module com.appcelerator.aca`, error);
+	// console.error(`Error loading module com.appcelerator.aca`, error);
+	console.warn(`Error loading module com.appcelerator.aca`);
 	aca = {
 		logHandledException: error => { console.debug(`aca.logHandledException(${error})`); },
 		leaveBreadcrumb:     (breadcrumb, data) => { console.debug(`aca.leaveBreadcrumb(${breadcrumb})`); },
