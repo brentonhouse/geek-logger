@@ -1,24 +1,22 @@
 {
 	"name": "@geek/logger",
-	"version": "1.0.18",
+	"version": "1.0.19",
 	"description": "Logging module for Node.js and Axway Titanium",
 	"main": "Logger.js",
 	"scripts": {
 		"list": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz",
-		"prep": "npm install --ignore-scripts && npm run list",
+		"prep": "npm install --ignore-scripts",
 		"prepublishOnly": "git pull && bump release",
 		"lint": "eslint --fix .",
 		"test": "npm run prep"
 	},
 	"author": {
 		"name": "Brenton House",
-		"email": "brenton.house@gmail.com",
 		"url": "http://brenton.house"
 	},
 	"maintainers": [
 		{
 			"name": "Brenton House",
-			"email": "brenton.house@gmail.com",
 			"url": "https://brenton.house"
 		}
 	],
@@ -49,15 +47,15 @@
 	"titanium": {},
 	"devDependencies": {
 		"@geek/eslint-config": "^1.0.3",
-		"eslint": "^8.6.0",
+		"eslint": "^8.8.0",
 		"eslint-plugin-import": "^2.25.4",
-		"eslint-plugin-jsdoc": "^37.5.1",
+		"eslint-plugin-jsdoc": "^37.7.0",
 		"eslint-plugin-promise": "^6.0.0",
 		"fs-extra": "^10.0.0",
 		"lodash": "^4.17.21"
 	},
 	"peerDependencies": {
-		"@geek/jsonc": "^1.0.4",
+		"@geek/jsonc": "^1.0.8",
 		"ansi-colors": "^4.1.1"
 	},
 	"private": false
